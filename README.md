@@ -30,8 +30,13 @@
 
 
 ## NOTES:
-- criteria = (type, maxCount, epsilon)
+- **criteria** = (type, maxCount, epsilon)
 - type = 1 or 2 or 3, using maxcount only, using min acc only, using both
 - max iterations, its 30 minimum accuracy 0.001 stop refining if either 30 terations or 0.001 acc achieved
-- mgrid shows all available combinations from a 2d points in a n*m grid 
+- **mgrid** shows all available combinations from a 2d points in a n*m grid 
 	- the grid will return an x, y arrays first shows all rows, second shows all columns and both of size n*m
+- **cvt** frane will be converted from default brg to gray scale image
+- **findChessboardCorners**: as it says and returns the corners
+- **cornerSubPix** will take the corners and refine the corners for higher accuracy based on criteria
+- **calibrateCamera** method to return the calibration matrecis used in transformation 3d to 2d
+- **drawChessboardCorners**: to take the corners and draw them on the camera feed
