@@ -1,3 +1,7 @@
+# usage 
+run main.py file after installing dep
+```pip install -r requirements.txt```
+``` python3 main.py```
 ## Goals
 - capture and calibrate camera
 - measure distances and direction using ultra sonic and servo
