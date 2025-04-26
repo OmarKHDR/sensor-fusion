@@ -4,14 +4,18 @@ import sys
 from pathlib import Path
 sys.path.append(str(Path(__file__).parent.parent))
 
-from trycamera import cap
+from calibration.trycamera import init_camera
 import os
+import json
 
 def generate_calibration_samples():
-	CHECKERBOARD = (8, 6)
-	square_size = 19
-	save_path = "calibration/calibration_samples.npz"
+	with open(Path(__file__).parent.parent / "env_var.json") as j:
+		obj = json.load(j)
+		CHECKERBOARD = (obj["board"][0], obj["board"][1])
+		square_size = obj["square_size"]
 
+	#print(CHECKERBOARD)
+	save_path = "calibration/calibration_samples.npz"
 	criteria = (cv2.TERM_CRITERIA_EPS + cv2.TERM_CRITERIA_MAX_ITER, 30, 0.001)
 
 	objp = np.zeros((CHECKERBOARD[0]*CHECKERBOARD[1], 3), np.float32)
@@ -23,7 +27,10 @@ def generate_calibration_samples():
 
 	count = 0
 	MAX_SAMPLES = 20
-
+	cap = init_camera()
+	if not cap:
+		print("failed to initialize camera, exiting...")
+		exit(1)
 	while True:
 		ret, frame = cap.read()
 		if not ret:
@@ -54,7 +61,9 @@ def generate_calibration_samples():
 				print("Collected enough samples. Calibrating...")
 				break
 		elif key == ord('q'):
-			break
+			cap.release()
+			cv2.destroyAllWindows()
+			exit(0)
 
 
 	np.savez_compressed(

@@ -4,7 +4,7 @@ import os
 import sys
 from pathlib import Path
 sys.path.append(str(Path(__file__).parent.parent))
-from calibration_samples_gen import generate_calibration_samples
+from calibration.calibration_samples_gen import generate_calibration_samples
 
 
 def calibrate_from_samples(samples_path="calibration/calibration_samples.npz", output_path="calibration/camera_calibration.npz"):
