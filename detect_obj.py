@@ -11,7 +11,7 @@ from pathlib import Path
 sys.path.append(str(Path(__file__).parent))
 from calibration.trycamera import init_camera
 
-def detector():
+def detector(cap):
     def polar_to_camera_coords(r_cm, theta_deg):
         theta_rad = math.radians(theta_deg)
         x = r_cm * math.sin(theta_rad)   # horizontal offset (X)
@@ -51,10 +51,9 @@ def detector():
     # Initialize YOLO once
     model = YOLO("yolov8n.pt")
 
-    cap = init_camera()
     if not cap:
-        print("failed to initialize camera, exiting...")
-        exit(1)
+        print("[x] camera is not working, try again ...")
+        return
     # Main loop
     while True:
         ret, frame = cap.read()

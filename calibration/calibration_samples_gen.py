@@ -8,7 +8,7 @@ from calibration.trycamera import init_camera
 import os
 import json
 
-def generate_calibration_samples():
+def generate_calibration_samples(cap):
 	with open(Path(__file__).parent.parent / "env_var.json") as j:
 		obj = json.load(j)
 		CHECKERBOARD = (obj["board"][0], obj["board"][1])
@@ -27,10 +27,9 @@ def generate_calibration_samples():
 
 	count = 0
 	MAX_SAMPLES = 20
-	cap = init_camera()
 	if not cap:
-		print("failed to initialize camera, exiting...")
-		exit(1)
+		print("[x] camera is not working try again ...")
+		return
 	while True:
 		ret, frame = cap.read()
 		if not ret:
@@ -63,7 +62,8 @@ def generate_calibration_samples():
 		elif key == ord('q'):
 			cap.release()
 			cv2.destroyAllWindows()
-			exit(0)
+			print("[x] exited before completing collecting calibaration data")
+			return
 
 
 	np.savez_compressed(

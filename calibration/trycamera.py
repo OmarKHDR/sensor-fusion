@@ -1,19 +1,7 @@
 import cv2
-import matplotlib.pyplot as plt
 from pathlib import Path
-import signal, sys
+import sys
 import json
-
-
-def interrupt_handler(signum, frame):
-    global cap
-    if cap is not None:
-        cap.release()
-    cv2.destroyAllWindows()
-    print("Goodbye!")
-    sys.exit(0)
-
-signal.signal(signal.SIGINT, interrupt_handler)
 
 
 def init_camera():
