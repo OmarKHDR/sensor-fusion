@@ -21,19 +21,25 @@ def detector(cap):
 
     def project_to_image(object_point_3D):
         image_points, _ = cv2.projectPoints(object_point_3D, rvec, tvec, camera_matrix, dist_coeffs)
+        print(f"3D point {object_point_3D[0]} -> 2D point {image_points[0][0]}")
         return tuple(image_points[0][0])
 
     def point_in_box(point, x1, y1, x2, y2):
         px, py = point
         return x1 <= px <= x2 and y1 <= py <= y2
 
-    # Load calibration data
     try:
         data = np.load("calibration/camera_calibration.npz", allow_pickle=True)
         camera_matrix = data['camera_matrix']
         dist_coeffs = data['dist_coeffs']
-        rvec = data['rvecs'][0]
-        tvec = data['tvecs'][0]
+
+        rvec = np.array([[0.0], [0.0], [0.0]], dtype=np.float32)
+        tvec = np.array([[0.0], [0.0], [0.0]], dtype=np.float32)
+
+        print("[o] loaded calibration results:")
+        print("Camera Matrix:\n", camera_matrix)
+        print("Rotation Vector:\n", rvec)
+        print("Translation Vector:\n", tvec)
     except:
         print("[x] coudnt load the caliration data, do calibration again")
         return
