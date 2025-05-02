@@ -9,7 +9,9 @@ def init_camera():
     with open(Path(__file__).parent.parent / "env_var.json") as j:
         obj = json.load(j)
         cam_url = obj["cam_url"]
-        print(f"camera index {cam_url}, of type {type(cam_url)}")
+        print(f"Successfully opened /dev/video{cam_url}")
+        print("==================================")
+
 
     cap = cv2.VideoCapture(cam_url)
     if not cap.isOpened():

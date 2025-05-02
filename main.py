@@ -19,14 +19,15 @@ signal.signal(signal.SIGINT, interrupt_handler)
 
 while True:
 	cap = None
+	print("hints: you can edit checkerboard size and the camera uri in [[env_var.json]]")
+	print("hints: you can edit object place from [[ultrasonic.json]]")
 	prog = input("enter c for calibration, d for detection, q to quit: ")
+
 	if prog == 'c':
-		print("you can edit checkerboard size in env_var.json file, also the camera uri")
 		cap = init_camera()
 		generate_calibration_samples(cap)
 		calibrate_from_samples()
 	elif prog == 'd':
-		print("you can edit the camera uri from env_var.json file")
 		cap = init_camera()
 		detector(cap)
 	elif prog == 'q':

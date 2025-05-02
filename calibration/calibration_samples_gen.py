@@ -29,11 +29,16 @@ def generate_calibration_samples(cap):
 	MAX_SAMPLES = 20
 	if not cap:
 		print("[x] camera is not working try again ...")
+		print("==================================")
 		return
+	print("hints: click on space to take the sample picture")
+	print("hints: click on q to quit!")
+	print("==================================")
+
 	while True:
 		ret, frame = cap.read()
 		if not ret:
-			print("you are a failure")
+			print("you are a failure!!")
 			continue
 
 		gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
@@ -73,6 +78,8 @@ def generate_calibration_samples(cap):
 		image_shape=gray.shape[::-1]  # (width, height)
 	)
 	print(f"[✓] Saved calibration samples to {os.path.abspath(save_path)}")
+	print("==================================")
+
 
 	cap.release()
 	cv2.destroyAllWindows()
